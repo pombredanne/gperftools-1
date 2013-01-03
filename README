@@ -1,3 +1,21 @@
+POWERPC NOTES
+-------------
+
+This branch contains PowerPC specific performance tunings and 
+platform fixes. Although some tests fail, libtcmalloc works
+correctly. The memory heap and cpu profilers still have some issues.
+
+On newer distros with 64k page size, it is highly recommended
+to configure with '-DTCMALLOC_LARGE_PAGES64K' CXX flag. It turns the
+internal page allocation to use 64K page size and avoid more syscalls
+to allocate memory from OS.
+
+Another tuning is to not limit the central thread cache objects
+limit move to thread cache. This is important on some programs that
+uses allocation of a large number of objects per thread. This
+optimziation is enabled by default with '-DTCMALLOC_LARGE_PAGES64K'.
+
+
 IMPORTANT NOTE FOR 64-BIT USERS
 -------------------------------
 There are known issues with some perftools functionality on x86_64
