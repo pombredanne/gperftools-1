@@ -80,6 +80,7 @@ int SizeMap::NumMoveSize(size_t size) {
   int num = static_cast<int>(64.0 * 1024.0 / size);
   if (num < 2) num = 2;
 
+#ifndef TCMALLOC_LARGE_PAGES64K
   // Avoid bringing too many objects into small object free lists.
   // If this value is too large:
   // - We waste memory with extra objects sitting in the thread caches.
@@ -91,6 +92,7 @@ int SizeMap::NumMoveSize(size_t size) {
   //   its lock each time.
   // This value strikes a balance between the constraints above.
   if (num > 32) num = 32;
+#endif
 
   return num;
 }
